@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Next JS
 
-## Getting Started
+Be careful in naming convention.
+use `[id]` for params.
 
-First, run the development server:
+## backend
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+backend will be in `src/app/api` folder.
+file name should be `route.js`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+models, helper, dbconif will be in `src/app`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## frontend
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+frontend will be in `src/app` folder
 
-## Learn More
+file name should be `page`
 
-To learn more about Next.js, take a look at the following resources:
+## client and server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+use `use client` for frontend. if we want something from frontend e.g window.location, data, etc. By default it's a server component.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Token Verify mechanism
 
-## Deploy on Vercel
+Application generates two tokens. One send to user on email and one save on database.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1 way to explain.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+{then user will on that link and return on application then check user token are same as database if yes then application verified to user.}
+
+2. way to explain.
+
+{ User will get the token and click on this link which redirect to `/api/auth/verify`, then it's server side code that verify if the token is valid or not. If yes then return true else false.}
