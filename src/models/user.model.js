@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { type } from "os";
 
 const userSchema = new mongoose.Schema({
   // MongoDB Schema for User Model
@@ -12,7 +11,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Provide a email"],
     unique: true,
-    LowerCase: true,
   },
   password: {
     type: String,
