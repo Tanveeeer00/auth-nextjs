@@ -2,8 +2,7 @@ import { connectToDB } from "@/dbConfig/dbConfig";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
-import { sendEmail } from "@/helpers/mailer";
-import { error } from "console";
+import jwt from "jsonwebtoken";
 
 connectToDB();
 
@@ -30,6 +29,30 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // jsonwebtoken
+
+    const tokenData = {
+      id: user._id,
+      email: user.email,
+      username: user.userName,
+    };
+
+    const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
+      expiresIn: "1d",
+    });
+
+    const response = NextResponse.json({
+      message: "Logged In Success",
+      success: true,
+    });
+
+    // cookies
+
+    response.cookies.set("token", token, {
+      httpOnly: true,
+    });
+    return response;
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
