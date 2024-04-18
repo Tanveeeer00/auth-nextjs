@@ -24,10 +24,10 @@ use `use client` for frontend. if we want something from frontend e.g window.loc
 
 Application generates two tokens. One send to user on email and one save on database.
 
-1 way to explain.
+1. Way to explain.
 
-{then user will on that link and return on application then check user token are same as database if yes then application verified to user.}
+{ Then user will on that link and return on application then check user token are same as database if yes then application verified to user.}
 
-2. way to explain.
+2. Way to explain.
 
 { User will get the token and click on this link which redirect to `/api/auth/verify`, then it's server side code that verify if the token is valid or not. If yes then return true else false.}
