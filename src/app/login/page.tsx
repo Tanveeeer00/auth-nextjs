@@ -1,110 +1,40 @@
-// "use client";
-// import axios from "axios";
-// import Link from "next/link";
-// import { useRouter } from "next/navigation";
-// import React, { useEffect, useState } from "react";
-// import toast from "react-hot-toast";
-
-// export default function Signuppage() {
-//   const [user, setUser] = useState({
-//     username: "",
-//     email: "",
-//     password: "",
-//   });
-//   const [buttonDisabled, setButtonDisabled] = useState(false);
-//   const router = useRouter();
-//   const [loading, setLoading] = useState(false);
-//   const onSignup = async () => {
-//     try {
-//       setLoading(true);
-//       // const response = await axios.post("/api/users/signup", user);
-//       const response = await fetch("/api/users/signup", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(user),
-//       });
-//       console.log("Signup success", response);
-//       router.push("/login");
-//     } catch (error: any) {
-//       console.log("Signup failed", error.message);
-
-//       toast.error(error.message);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     if (
-//       user.email.length > 0 &&
-//       user.username.length > 0 &&
-//       user.password.length > 0
-//     ) {
-//       setButtonDisabled(false);
-//     } else {
-//       setButtonDisabled(true);
-//     }
-//   }, [user]);
-//   return (
-//     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-//       <h1>{loading ? "Processing..." : "Signup"}</h1>
-//       <hr />
-//       <label htmlFor="username">username</label>
-//       <input
-//         id="username"
-//         className="text-black"
-//         value={user.username}
-//         onChange={(e) => setUser({ ...user, username: e.target.value })}
-//         placeholder="Username"
-//         type="text"
-//       />
-//       <label htmlFor="username">email</label>
-//       <input
-//         id="email"
-//         value={user.email}
-//         className="text-black"
-//         onChange={(e) => setUser({ ...user, email: e.target.value })}
-//         placeholder="Email"
-//         type="text"
-//       />
-//       <label htmlFor="username">password</label>
-//       <input
-//         id="password"
-//         className="text-black"
-//         value={user.password}
-//         onChange={(e) => setUser({ ...user, password: e.target.value })}
-//         placeholder="Password"
-//         type="password"
-//       />
-//       <button onClick={onSignup}>
-//         {buttonDisabled ? "fill form" : "Signup"}
-//       </button>
-//       <Link href="/login">Visit login page</Link>
-//     </div>
-//   );
-// }
 "use client";
-import Link from "next/link";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-export default function LoginPage() {
-  const router = useRouter();
-  const [user, setUser] = React.useState({
+export default function Loginpage() {
+  const [user, setUser] = useState({
     email: "",
     password: "",
   });
-  const [buttonDisabled, setButtonDisabled] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const onLogin = async () => {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/login", user);
-      console.log("Login success", response.data);
-      router.push("/profile");
+
+      if (response) {
+        router.push("/profile");
+      } else {
+        throw new Error("Login failed");
+      }
+      // const response = await fetch("/api/users/login", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(user),
+      // })
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error: any) {
+      //     console.log("api error", error);
+      //   });
+      console.log("Login success", response);
     } catch (error: any) {
       console.log("Login failed", error.message);
 
@@ -121,37 +51,57 @@ export default function LoginPage() {
       setButtonDisabled(true);
     }
   }, [user]);
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1>{loading ? "Processing" : "Login"}</h1>
-      <hr />
-
-      <label htmlFor="email">email</label>
-      <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-        id="email"
-        type="text"
-        value={user.email}
-        onChange={(e) => setUser({ ...user, email: e.target.value })}
-        placeholder="email"
-      />
-      <label htmlFor="password">password</label>
-      <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-        id="password"
-        type="password"
-        value={user.password}
-        onChange={(e) => setUser({ ...user, password: e.target.value })}
-        placeholder="password"
-      />
-      <button
-        onClick={onLogin}
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-      >
-        {buttonDisabled ? "No login" : "Login"}
-      </button>
-      <Link href="/signup">Visit signup page</Link>
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-slate-600">
+      <div className=" border border-blue-50 flex flex-col bg-slate-300 h-full p-5 rounded-lg">
+        <h1 className="text-3xl font-bold text-purple-700 text-center">
+          {loading ? "Processing..." : "Login"}
+        </h1>
+        <div className="flex flex-col">
+          <label htmlFor="username" className="text-xl text-purple-600">
+            Email
+          </label>
+          <input
+            id="email"
+            value={user.email}
+            className="text-black rounded-lg pl-3 h-8 my-2"
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            placeholder="Email"
+            type="text"
+          />
+          <label htmlFor="password" className="text-xl text-purple-600">
+            Password
+          </label>
+          <input
+            id="password"
+            className="text-black rounded-lg pl-3 h-8 my-2"
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            placeholder="Password"
+            type="password"
+          />
+        </div>
+        <div className="text-center">
+          {buttonDisabled ? (
+            <button className="text-white border border-black rounded-xl cursor-not-allowed bg-purple-600 hover:bg-white hover:text-purple-500 font-medium text-lg w-[8rem]">
+              Login
+            </button>
+          ) : (
+            <button
+              onClick={onLogin}
+              className="text-white border border-black rounded-xl bg-purple-600 hover:bg-white hover:text-purple-500 font-medium text-lg w-[8rem]"
+            >
+              Login
+            </button>
+          )}
+        </div>
+        <Link
+          href="/signup"
+          className="text-md font-medium mt-3 text-purple-950"
+        >
+          Visit signup page
+        </Link>
+      </div>
     </div>
   );
 }

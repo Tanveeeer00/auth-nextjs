@@ -29,12 +29,10 @@ export default function ProfilePage() {
     setData(res.data.data._id);
   };
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1>Profile</h1>
-      <hr />
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-slate-600">
+      <h1 className="text-3xl font-bold underline">PROFILE</h1>
 
-      <p>Profile page</p>
-      <h2 className="p-1 rounded bg-green-500">
+      <h2 className="text-lg rounded-xl bg-purple-600 p-3 mt-5">
         {data === "nothing" ? (
           "NOTHING"
         ) : (
@@ -42,19 +40,20 @@ export default function ProfilePage() {
         )}
       </h2>
       <hr />
-      <button
-        onClick={logout}
-        className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Logout
-      </button>
-
-      <button
-        onClick={getUserDetails}
-        className="bg-green-800 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        GetUser Details
-      </button>
+      <div className="flex gap-5">
+        <button
+          onClick={getUserDetails}
+          className="bg-teal-500 mt-4 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded"
+        >
+          GetUser Details
+        </button>
+        <button
+          onClick={logout}
+          className="bg-red-600 mt-4 hover:bg-red-800 text-white font-bold py-2 px-4 rounded"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }
