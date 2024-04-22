@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   // MongoDB Schema for User Model
-  userName: {
+  username: {
     type: String,
     required: [true, "Provide a username"],
     unique: true,
