@@ -13,6 +13,11 @@ export async function POST(request: NextRequest) {
 
     console.log(reqBody);
 
+    // check every feilds are fill
+    if (username === "" || email === "" || password === "") {
+      throw new Error("Please fill all fields");
+    }
+
     //check if user already exists
     const user = await User.findOne({ email });
 
